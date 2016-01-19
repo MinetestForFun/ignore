@@ -8,22 +8,25 @@ Ignore uses a few namespaces to organize its data. Here is a diagram explaining 
 
     ignore <- main namespace
     |
-    + get_list <- basic api methods (lists, etc...)
-    + get_ignore_names <- for all of them see part 1
-    + set_list
-    + del_list
-    + init_list
-    + get_ignore
-    + add
-    + del
-    + save
-    + load
-    |
-    + config <- configuration values (see part 5)
-    |      |
-    |      + save_dir
-    |      + enabled
-    |      + queue_interval
+    + lists <- all the players' ignore lists (see part 1)
+    |     |
+    |     + data <- the players' data
+    |     |    |
+    |     |    + foo <- player foo's ignore list
+    |     |    + bar <- player bar's ignore list
+    |     |    + ...
+    |     |
+    |     |
+    |     + get_list <- basic api methods (lists, etc...)
+    |     + get_ignore_names <- for all of them see part 1
+    |     + set_list
+    |     + del_list
+    |     + init_list
+    |     + get_ignore
+    |     + add
+    |     + del
+    |     + save
+    |     + load
     |
     + queue <- the entire queues, data and methods (see part 2)
     |     |
@@ -37,13 +40,12 @@ Ignore uses a few namespaces to organize its data. Here is a diagram explaining 
     |     + work <- work method
     |     + flush <- flush method
     |
-    + lists <- all the players' ignore lists (see part 1)
-    |     |
-    |     + foo <- player foo's ignore list
-    |     + bar <- player bar's ignore list
-    |     + ...
-    |
     + callback <- ignore's callback (see part 3)
+    + config <- configuration values (see part 5)
+           |
+           + save_dir
+           + enabled
+           + queue_interval
 
 
 ## 1°) Lists
