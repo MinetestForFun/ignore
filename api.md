@@ -69,10 +69,11 @@ Those methods come in `lists.lua` :
     - resets name's ignore list to an empty dictionary. Creates it if it doesn't exist
  - `ignore.get_ignore`
     - 2 parameters : ignored (string), name (string)
-    - returns name's entry about ignored, whether or not it exists
+    - returns name's entry about ignored, whether or not it exists. Tries to load names' ignore list, and return the error string given by `io.open`, returned by `ignore.load`, when it fails to (along with the value false)
  - `ignore.add(ignored, name)`
     - 2 parameters : ignored (string), name (string)
-    - adds ignored to name's list, or warn if they're already ignored ('dejavu' return code)
+    - adds `ignored` to name's list, or warn if they're already ignored ('dejavu' return code)
+    - if the player `ignored` is protected by `ignore_protection`, return false and the 'protected' code
  - `ignore.del(ignored, name)`
     - 2 parameters : ignored (string), name (string)
     - removes ignored from name's list, or warn if they're not being ignored ('notignored' return code)
@@ -111,12 +112,12 @@ These methods come from `queues.lua`:
 
 Ignore's callback is located inside `callback.lua`. It is by default hooked to `minetest.register_on_chat_message`. It does all the engine's work while filtering according to ignore lists.
 
-## 4°) The chatcommand
+## 4°) The chatcommand and privilege
 
-Ignore's chatcommand, the users' basic interface, is implemented in `chatcommand.lua`. A configuration key can allow you to disable this file, making ignore pointless. The chat command currently handles 5 subcommands :
+Ignore's chatcommand, the users' basic interface, is implemented in `chatcommand.lua`, along with the definition of the `ignore_protection` privilege. A configuration key can allow you to disable this file, making ignore pointless. The chat command currently handles 5 subcommands :
  - `add` :
     - 1 parameter needed : the player's name
-    - adds the player to the invoker's ignore list, or warn them if they are already ignored
+    - adds the player to the invoker's ignore list if the player isn't protected with the `ignore_protection` privilege, or warn them if they are already ignored
     - note : `add` can be replaced by `+`
  - `del` :
     - 1 parameter needed : the ignored player's name

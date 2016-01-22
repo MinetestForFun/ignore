@@ -1,11 +1,15 @@
 -- Part of the ignore mod
 -- Last Modification : 01/18/16 @ 9:03PM UTC+1
 -- This file contains the ignore chatcommand
+-- And also, the ignore_protection privilege
 --
+
+minetest.register_privilege("ignore_protection",
+	"Players with this privilege cannot be ignored")
 
 minetest.register_chatcommand("ignore", {
 	description = "Manage ignore list",
-	params = "<add|del|show|init|help> [<name>]",
+	params = "<add|del|show|init|list|help> [<name>]",
 	privs = {shout = true},
 	func = function(name, param)
 		if not ignore.get_list(name) then
@@ -21,23 +25,27 @@ minetest.register_chatcommand("ignore", {
 
 		if cmd == "help" then
 			return true, "Ignore's help : \n" ..
-				"- /ignore help : Show this help\n" .. 
+				"- /ignore help : Show this help\n" ..
 				"- /ignore add name : Add name in your ignore list\n" ..
 				"- /ignore del name : Remove name from your ignore list\n" ..
 				"- /ignore show : Print your entire ignore list\n" ..
-				"- /ignore init : Reset your ignore list"
+				"- /ignore init : Reset your ignore list\n" ..
+				"- /ignore list : List all persons ignoring you. If provided " ..
+					"with a parameter, will check Whether that person is ignoring you or not"
 
 		elseif cmd == "add" or cmd == "+" then
 			if not params[2] then
 				return false, "Ignore's add subcommand needs a parameter : the player's name"
 			end
 
-			local res = ignore.add(params[2], name)
+			local res, code = ignore.add(params[2], name)
 			if res then
 				ignore.queue.add({type = "save", target = name})
 				return true, "Successfully added " .. params[2] .. " to your ignore list"
-			else
+			elseif code == "dejavu" then
 				return true, params[2] .. " is already in your ignore list"
+			elseif code == "protected" then
+				return true, params[2] .. " is protected. You cannot ignore themw"
 			end
 
 		elseif cmd == "del" or cmd == "-" then
@@ -69,6 +77,20 @@ minetest.register_chatcommand("ignore", {
 			ignore.init_list(name)
 			ignore.queue.add({type = "save", target = name})
 			return true, "Successfully reset your ignore list"
+
+		elseif cmd == "list" then
+			if not params[2] then
+				return false, "Please provide a player's name"
+			end
+
+			local res, code = ignore.get_ignore(name, params[2])
+			if res then
+				return true, "Player " .. params[2] .. " is ignoring you"
+			elseif not code then
+				return true, "You are not on " .. params[2] .. "'s ignore list"
+			else
+				return true, "This player doesn't appear to have any ignore list"
+			end
 
 		else
 			return false, "Unknown subcommand " .. cmd .. ". See '/help ignore' or '/ignore help' for help on this command"

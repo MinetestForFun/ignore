@@ -42,7 +42,12 @@ end
 
 function ignore.get_ignore(ignored, name)
 	if not ignore.lists.data[name] then
-		return false
+		local res, code = ignore.load(name)
+		if not res and code then
+			return false, code
+		else
+			return ignore.get_ignore(ignored, name)
+		end
 	end
 
 	return ignore.lists.data[name][ignored]
@@ -58,6 +63,9 @@ function ignore.add(ignored, name)
 	if ignore.get_ignore(ignored, name) then
 		minetest.log("action", "[Ignore] Will not add " .. ignored .. " in list of player " .. name .. " : already present")
 		return false, "dejavu"
+	elseif minetest.get_player_privs(ignored).ignore_protection then
+		minetest.log("action", "[Ignore] Will not add " .. ignored .. " in list of player " .. name .. " : player protected")
+		return false, "protected"
 	end
 
 	ignore.lists.data[name][ignored] = os.time()
