@@ -44,7 +44,7 @@ minetest.register_chatcommand("ignore", {
 			elseif code == "dejavu" then
 				return true, params[2] .. " is already in your ignore list"
 			elseif code == "protected" then
-				return true, params[2] .. " is protected. You cannot ignore themw"
+				return true, params[2] .. " is protected. You cannot ignore them"
 			end
 
 		elseif cmd == "del" or cmd == "-" then
