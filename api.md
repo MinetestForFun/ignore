@@ -132,6 +132,9 @@ Ignore's chatcommand, the users' basic interface, is implemented in `chatcommand
  - `init` :
     - no parameters needed
     - resets the invoker's ignore list to an empty dictionary
+ - `check` :
+    - 1 parameter needed : a player's name
+    - tells you whether or not player `name` is ignoring you
 
 Note : players need the `shout` privilege to use `/ignore`.
 

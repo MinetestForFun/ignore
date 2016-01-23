@@ -9,7 +9,7 @@ minetest.register_privilege("ignore_protection",
 
 minetest.register_chatcommand("ignore", {
 	description = "Manage ignore list",
-	params = "<add|del|show|init|list|help> [<name>]",
+	params = "<add|del|show|init|check|help> [<name>]",
 	privs = {shout = true},
 	func = function(name, param)
 		if not ignore.get_list(name) then
@@ -30,8 +30,7 @@ minetest.register_chatcommand("ignore", {
 				"- /ignore del name : Remove name from your ignore list\n" ..
 				"- /ignore show : Print your entire ignore list\n" ..
 				"- /ignore init : Reset your ignore list\n" ..
-				"- /ignore list : List all persons ignoring you. If provided " ..
-					"with a parameter, will check Whether that person is ignoring you or not"
+				"- /ignore check name : Checks whether or not player 'name' is ignoring you"
 
 		elseif cmd == "add" or cmd == "+" then
 			if not params[2] then
@@ -78,7 +77,7 @@ minetest.register_chatcommand("ignore", {
 			ignore.queue.add({type = "save", target = name})
 			return true, "Successfully reset your ignore list"
 
-		elseif cmd == "list" then
+		elseif cmd == "check" then
 			if not params[2] then
 				return false, "Please provide a player's name"
 			end
