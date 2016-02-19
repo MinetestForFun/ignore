@@ -69,7 +69,7 @@ Those methods come in `lists.lua` :
     - resets name's ignore list to an empty dictionary. Creates it if it doesn't exist
  - `ignore.get_ignore`
     - 2 parameters : ignored (string), name (string)
-    - returns name's entry about ignored, whether or not it exists. Tries to load names' ignore list, and return the error string given by `io.open`, returned by `ignore.load`, when it fails to (along with the value false)
+    - returns name's entry about ignored, whether or not it exists. Tries to load names' ignore list, and return the error string given by `io.open`, returned by `ignore.load`, along with the value false, and creates an empty list for the player when it fails to load it.
  - `ignore.add(ignored, name)`
     - 2 parameters : ignored (string), name (string)
     - adds `ignored` to name's list, or warn if they're already ignored ('dejavu' return code)

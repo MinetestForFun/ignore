@@ -94,7 +94,7 @@ end
 function ignore.save(name)
 	if not ignore.lists.data[name] then
 		minetest.log("action", "[Ignore] Saving list of " .. name .. " : inexistant list")
-		ignore.init(name)
+		ignore.init_list(name)
 	end
 
 	local f, err = io.open(ignore.config.save_dir .. "/" .. name, 'w')
@@ -113,13 +113,13 @@ function ignore.save(name)
 end
 
 function ignore.load(name)
+	ignore.init_list(name)
+
 	local f, err = io.open(ignore.config.save_dir .. "/" .. name)
 	if not f then
 		minetest.log("error", "[Ignore] Failed to load " .. name .. "'s list : " .. err)
 		return false, err
 	end
-
-	ignore.init_list(name)
 
 	for line in f:lines() do
 		local ignored, timestamp

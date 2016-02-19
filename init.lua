@@ -32,3 +32,7 @@ if ignore.config.enabled then
 else
 	minetest.log("action", "[Ignore] This session is loaded without the ignore callback")
 end
+
+minetest.register_on_leaveplayer(function(player)
+	ignore.del_list(player:get_player_name())
+end)
