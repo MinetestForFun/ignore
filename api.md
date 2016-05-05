@@ -67,7 +67,7 @@ Those methods come in `lists.lua` :
  - `ignore.init_list(name)`
     - 1 parameter : name (string)
     - resets name's ignore list to an empty dictionary. Creates it if it doesn't exist
- - `ignore.get_ignore`
+ - `ignore.get_ignore(ignored, name)`
     - 2 parameters : ignored (string), name (string)
     - returns name's entry about ignored, whether or not it exists. Tries to load names' ignore list, and return the error string given by `io.open`, returned by `ignore.load`, along with the value false, and creates an empty list for the player when it fails to load it.
  - `ignore.add(ignored, name)`
@@ -111,6 +111,7 @@ These methods come from `queues.lua`:
 ## 3°) The callback
 
 Ignore's callback is located inside `callback.lua`. It is by default hooked to `minetest.register_on_chat_message`. It does all the engine's work while filtering according to ignore lists.
+The same file also contains an override of /me to block ignored user's actions.
 
 ## 4°) The chatcommand and privilege
 

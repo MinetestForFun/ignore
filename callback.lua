@@ -54,3 +54,13 @@ function ignore.callback(sender, message)
 end
 
 minetest.register_on_chat_message(ignore.callback)
+
+-- Override on /me
+local old_me_callback = core.chatcommands["me"].func
+core.chatcommands["me"].func = function(name, param)
+	for _, p in pairs(minetest.get_connected_players()) do
+		if not ignore.get_ignore(name, p:get_player_name()) then
+			minetest.chat_send_player(p:get_player_name(), ("* %s %s"):format(name, param))
+		end
+	end
+end
