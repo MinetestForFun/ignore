@@ -34,10 +34,12 @@ function ignore.callback(sender, message)
 	end
 
 	for i = index+1, table.getn(core.registered_on_chat_messages) do
-		local ret = core.registered_on_chat_messages[i](sender, message)
-		if ret then
-			-- If other mods decide to block callbacks that's their choice
-			break
+		if (not rawget(_G, "chatdam") or core.registered_on_chat_messages[i] ~= chatdam.floodcontrol) then
+			local ret = core.registered_on_chat_messages[i](sender, message)
+			if ret then
+				-- If other mods decide to block callbacks that's their choice
+				break
+			end
 		end
 	end
 
