@@ -47,7 +47,11 @@ function ignore.callback(sender, message)
 	-- Finally, send and sort according to ignores
 	for k, ref in pairs(minetest.get_connected_players()) do
 		local receiver = ref:get_player_name()
-		if receiver ~= sender and not ignore.get_ignore(sender, receiver) then
+		local vtable = minetest.get_version().string:split('-')[1]:split('.')
+		if (receiver ~= sender or (tonumber(vtable[1]) > 0 or tonumber(vtable[2]) > 4 or tonumber(vtable[3]) >= 15)) and not ignore.get_ignore(sender, receiver) then
+			-- Small note :
+			-- In VERSION < 0.4.16, a client would see their own message in chat before the server acknowledged them, so the server wouldn't send it to them, and we didn't either
+			-- In VERSION >= 0.4.16, a client would receive the server packet indicating a chat message before showing even the player's own message : we need to send them
 			minetest.chat_send_player(receiver, ("<%s> %s"):format(sender, message))
 		end
 	end	
