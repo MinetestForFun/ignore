@@ -1,7 +1,8 @@
--- Part of the Ignore mod
--- Last Modification : 01/18/16 @ 9:09PM UTC+1
--- This file contains all methods/namespaces to manage the queue
---
+--[[ 
+Part of the Ignore mod
+Last Modification : 01/18/16 @ 9:09PM UTC+1
+This file contains all methods/namespaces to manage the queue
+--]]
 
 ignore.queue = {}
 ignore.queue.data = {}
