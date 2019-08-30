@@ -3,11 +3,11 @@
 	Ignore
 
 	A Minetest mod to manage ignore lists
-	Code by : Mg
+	Code by: Mg
 
-	Version : 00.01.18
-	License : WTFPL
-	Last Modification : 01/18/16 @ 9:31PM UTC+1
+	Version: 00.01.18
+	License: WTFPL
+	Last Modification: 01/18/16 @ 9:31PM UTC+1
 
 ]]--
 
@@ -17,8 +17,8 @@ ignore = {}
 
 ignore.config = {}
 ignore.config.save_dir = minetest.get_worldpath() .. "/ignore"
-ignore.config.enabled = not(minetest.setting_getbool("disable_ignore") or false)
-ignore.config.queue_interval = tonumber(minetest.setting_get("ignore_queue_interval")) or 30
+ignore.config.enabled = not(minetest.settings:get_bool("disable_ignore") or false)
+ignore.config.queue_interval = tonumber(minetest.settings:get("ignore_queue_interval")) or 30
 
 dofile(minetest.get_modpath("ignore") .. "/lists.lua")
 dofile(minetest.get_modpath("ignore") .. "/queues.lua")
