@@ -1,15 +1,19 @@
--- Part of the ignore mod
--- Last Modification : 01/18/16 @ 9:03PM UTC+1
--- This file contains the ignore chatcommand
--- And also, the ignore_protection privilege
---
+--[[ 
+Part of the ignore mod
+Last Modification : 01/18/16 @ 9:03PM UTC+1
+This file contains the ignore chatcommand
+And also, the ignore_protection privilege
+--]]
 
-minetest.register_privilege("ignore_protection",
-	"Players with this privilege cannot be ignored")
+minetest.register_privilege("ignore_protection", {
+	description = "Players with this privilege cannot be ignored",
+	give_to_singleplayer = false,
+	give_to_admin = true,	
+})
 
 minetest.register_chatcommand("ignore", {
 	description = "Manage ignore list",
-	params = "<add|del|show|init|check|help> [<name>]",
+	params = "<add | del | show | init | check | <help> [<name>]",
 	privs = {shout = true},
 	func = function(name, param)
 		if not ignore.get_list(name) then

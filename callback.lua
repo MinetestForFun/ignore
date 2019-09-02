@@ -1,7 +1,8 @@
--- Part of the ignore mod
--- Last Modification : 01/18/16 @ 9:01PM UTC+1
--- This file contains the ignore callback
---
+--[[
+Part of the ignore mod
+Last Modification: 01/18/16 @ 9:01PM UTC+1
+This file contains the ignore callback
+--]]
 
 function ignore.callback(sender, message)
 
@@ -34,7 +35,7 @@ function ignore.callback(sender, message)
 	end
 
 	for i = index+1, table.getn(core.registered_on_chat_messages) do
-		if (not rawget(_G, "chatdam") or core.registered_on_chat_messages[i] ~= chatdam.floodcontrol) then
+		if (not minetest.global_exists("chatdam") or core.registered_on_chat_messages[i] ~= chatdam.floodcontrol) then
 			local ret = core.registered_on_chat_messages[i](sender, message)
 			if ret then
 				-- If other mods decide to block callbacks that's their choice
